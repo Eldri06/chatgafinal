@@ -1,4 +1,4 @@
-// Smooth scrolling for navigation links
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -78,7 +78,7 @@ document.querySelectorAll('button, .btn-primary, .btn-secondary, .start-btn, .ct
 
 
 
-// Add typing effect to hero title
+//typinhg effect
 const heroTitle = document.querySelector('.hero h1');
 if (heroTitle) {
     const text = heroTitle.textContent;
@@ -100,7 +100,7 @@ if (heroTitle) {
 
 function animateCounter(element, target) {
     let current = 0;
-    const increment = target / 50; // Divide into 50 steps
+    const increment = target / 50; 
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
