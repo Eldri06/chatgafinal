@@ -1,4 +1,4 @@
-
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -12,7 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-
+// Intersection Observer for fade-in animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -27,7 +27,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-
+// Apply fade-in animation to elements
 document.querySelectorAll('.fade-in').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
@@ -35,7 +35,7 @@ document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
 });
 
-
+// Add hover effects for buttons
 document.querySelectorAll('.btn-primary, .btn-secondary, .start-btn, .cta-btn').forEach(btn => {
     btn.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-2px)';
@@ -46,9 +46,10 @@ document.querySelectorAll('.btn-primary, .btn-secondary, .start-btn, .cta-btn').
     });
 });
 
+// Add click animation for buttons
 document.querySelectorAll('button, .btn-primary, .btn-secondary, .start-btn, .cta-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
-  
+        // Create ripple effect
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
@@ -75,30 +76,38 @@ document.querySelectorAll('button, .btn-primary, .btn-secondary, .start-btn, .ct
     });
 });
 
+// Add typing effect to hero title (optional)
 const heroTitle = document.querySelector('.hero h1');
 if (heroTitle) {
     const text = heroTitle.textContent;
-    heroTitle.textContent = '';
-    let i = 0;
+    const isMobile = window.innerWidth <= 768;
     
-    setTimeout(() => {
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-        typeWriter();
-    }, 500);
+    // Only apply typing effect on desktop
+    if (!isMobile) {
+        heroTitle.textContent = '';
+        let i = 0;
+        
+        setTimeout(() => {
+            const typeWriter = () => {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            };
+            typeWriter();
+        }, 500);
+    }
 }
 
+// Animate stats when they come into view - Updated for new content
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const numberElement = entry.target.querySelector('.stat-number');
             const text = numberElement.textContent;
-        
+            
+            // Simple fade in animation for the new text-based stats
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
         }
@@ -109,14 +118,14 @@ document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-
+// Add smooth reveal for feature cards
 const featureObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
             setTimeout(() => {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
-            }, index * 100); 
+            }, index * 100); // Stagger the animations
         }
     });
 }, { threshold: 0.1 });
@@ -128,12 +137,13 @@ document.querySelectorAll('.feature-card').forEach(card => {
     featureObserver.observe(card);
 });
 
-
+// Enhanced responsive functionality
 function handleResponsiveChanges() {
     const width = window.innerWidth;
-
+    
+    // Adjust animations based on screen size
     if (width <= 768) {
- 
+        // Disable parallax and heavy animations on mobile for better performance
         document.querySelectorAll('.fade-in').forEach(el => {
             el.style.transition = 'all 0.3s ease-out';
         });
@@ -143,9 +153,9 @@ function handleResponsiveChanges() {
         });
     }
     
-   
+    // Adjust typing speed on mobile
     if (width <= 480) {
-      
+        // Disable typing animation on very small screens
         const heroTitle = document.querySelector('.hero h1');
         if (heroTitle && heroTitle.textContent === '') {
             heroTitle.textContent = 'Chat-GA!';
@@ -153,13 +163,13 @@ function handleResponsiveChanges() {
     }
 }
 
-
+// Call on load and resize
 window.addEventListener('load', handleResponsiveChanges);
 window.addEventListener('resize', handleResponsiveChanges);
 
-
+// Touch-friendly enhancements for mobile
 if ('ontouchstart' in window) {
-   
+    // Add touch feedback for buttons
     document.querySelectorAll('.btn-primary, .btn-secondary, .start-btn, .cta-btn').forEach(btn => {
         btn.addEventListener('touchstart', function() {
             this.style.transform = 'scale(0.98)';
@@ -172,11 +182,11 @@ if ('ontouchstart' in window) {
         });
     });
     
-   
+    // Improve touch scrolling
     document.body.style.webkitOverflowScrolling = 'touch';
 }
 
-
+// Modal/Popup functionality
 function createModal(content) {
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
@@ -190,19 +200,19 @@ function createModal(content) {
     
     document.body.appendChild(modal);
     
-   
+    // Animate in
     setTimeout(() => {
         modal.classList.add('show');
     }, 10);
     
-
+    // Close on overlay click
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             closeModal(modal);
         }
     });
     
-
+    // Close on escape key
     const escapeHandler = function(e) {
         if (e.key === 'Escape') {
             closeModal(modal);
@@ -780,9 +790,9 @@ function submitFeedback(event) {
     event.target.reset();
 }
 
-
+// Add click handlers for buttons
 document.addEventListener('DOMContentLoaded', function() {
-  
+    // Try Chat-GA! buttons
     document.querySelectorAll('.btn-primary').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -790,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-
+    // CTA buttons
     document.querySelectorAll('.cta-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -798,6 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Start chatting button
     document.querySelectorAll('.start-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -805,14 +816,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-  
+    // Visit UMTC Portal button
     document.querySelectorAll('.btn-secondary').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            window.open('https://https://umtc.umindanao.edu.ph/login', '_blank');
+            window.open('https://portal.umindanao.edu.ph/', '_blank');
         });
     });
 
+    // Feature card learn more links
     document.querySelectorAll('.learn-more').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -830,6 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Add enter key support for message input
     document.addEventListener('keydown', function(e) {
         const messageInput = document.querySelector('.message-input');
         if (messageInput && messageInput === document.activeElement && e.key === 'Enter') {
